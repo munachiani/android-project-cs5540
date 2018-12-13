@@ -1,9 +1,13 @@
 package com.classchat.csula.classchat;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -18,7 +22,6 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class MainChatActivity extends AppCompatActivity {
 
-    // TODO: Add member variables here:
     private String mDisplayName;
     private ListView mChatListView;
     private EditText mInputText;
@@ -26,10 +29,24 @@ public class MainChatActivity extends AppCompatActivity {
     private DatabaseReference mDatabaseReference;
     private ChatListAdapter mAdapter;
 
+    private Toolbar mToolbar;
+
+    private FirebaseAuth mAuth;
+
+    private FirebaseUser user;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_chat);
+
+        mToolbar = findViewById(R.id.nav_actionbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        mToolbar.setTitle("");
+
 
         setupDisplayName();
         mDatabaseReference = FirebaseDatabase.getInstance().getReference();
@@ -57,6 +74,34 @@ public class MainChatActivity extends AppCompatActivity {
             }
         });
 
+        mAuth = FirebaseAuth.getInstance();
+
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.main,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    //    Add click listeners to the menu item
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+
+            case R.id.logout:
+                mAuth.signOut();
+                Intent intentLogout = new Intent(MainChatActivity.this, LoginActivity.class);
+                startActivity(intentLogout);
+                finish();
+                break;
+
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 
@@ -69,7 +114,6 @@ public class MainChatActivity extends AppCompatActivity {
 
     private void sendMessage() {
 
-        Log.d("FlashChat", "I sent something");
         String input = mInputText.getText().toString();
 
         if(!input.equals("")){
