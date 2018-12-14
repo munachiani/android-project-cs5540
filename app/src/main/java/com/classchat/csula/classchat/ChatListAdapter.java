@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 public class ChatListAdapter extends BaseAdapter{
 
-    private Activity mActivity;
+    private Context mActivity;
     private DatabaseReference mDatabaseReference;
     private String mDisplayName;
     private ArrayList<DataSnapshot> mSnapshotList;
@@ -62,7 +62,7 @@ public class ChatListAdapter extends BaseAdapter{
 
 
 
-    public ChatListAdapter(Activity activity, DatabaseReference databaseReference, String displayName) {
+    public ChatListAdapter(Context activity, DatabaseReference databaseReference, String displayName) {
         mActivity = activity;
         mDatabaseReference = databaseReference.child("messages");
         mDisplayName = displayName;

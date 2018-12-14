@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -33,6 +34,8 @@ public class LoginActivity extends AppCompatActivity {
     // Firebase Instance Variable
 
     private FirebaseAuth mAuth;
+
+    private FirebaseUser user;
 
 
     @Override
@@ -51,6 +54,14 @@ public class LoginActivity extends AppCompatActivity {
 
         // Get hold of the firebase instance variable
         mAuth = FirebaseAuth.getInstance();
+
+        user = mAuth.getCurrentUser();
+
+        if(user !=null){
+            Intent chatIntent = new Intent(LoginActivity.this,MainChatActivity.class);
+            startActivity(chatIntent);
+            finish();
+        }
 
 
     }
