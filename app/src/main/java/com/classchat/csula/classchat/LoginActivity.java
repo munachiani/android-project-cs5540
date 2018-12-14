@@ -55,13 +55,13 @@ public class LoginActivity extends AppCompatActivity {
         // Get hold of the firebase instance variable
         mAuth = FirebaseAuth.getInstance();
 
-        user = mAuth.getCurrentUser();
-
-        if(user !=null){
-            Intent chatIntent = new Intent(LoginActivity.this,MainChatActivity.class);
-            startActivity(chatIntent);
-            finish();
-        }
+//        user = mAuth.getCurrentUser();
+//
+//        if(user !=null){
+//            Intent chatIntent = new Intent(LoginActivity.this,MainChatActivity.class);
+//            startActivity(chatIntent);
+//            finish();
+//        }
 
 
     }
